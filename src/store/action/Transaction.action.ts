@@ -4,11 +4,18 @@ export const fetchTransactions = createAsyncThunk(
   'transaction/fetchTransactions',
   async () => {
     const response = await fetch(
-      'https://recruitment-test.flip.id/frontend-test ',
+      'https://recruitment-test.flip.id/frontend-test',
     );
-    const mappedTransactions = Object.values(response.json()).map(
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json(); // Await the JSON parsing
+    const mappedTransactions = Object.values(data).map(
       transaction => transaction,
     );
+    console.log('🚀 ~ mappedTransactions:', mappedTransactions);
     return mappedTransactions;
   },
 );

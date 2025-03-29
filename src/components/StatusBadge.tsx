@@ -2,15 +2,23 @@ import {ColorToken} from '@Constants/Color.constants';
 import React, {memo} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-const StatusBadge = ({status}) => {
+interface StatusBadgeProps {
+  status: 'SUCCESS' | 'PENDING';
+}
+
+const StatusBadge = ({status}: StatusBadgeProps) => {
   return (
-    <View style={[styles.badge, true ? styles.pending : styles.success]}>
+    <View
+      style={[
+        styles.badge,
+        status === 'PENDING' ? styles.pending : styles.success,
+      ]}>
       <Text
         style={[
           styles.badgeText,
-          true ? styles.textPending : styles.textSuccess,
+          status === 'PENDING' ? styles.textPending : styles.textSuccess,
         ]}>
-        Pengecekan
+        {status === 'PENDING' ? 'Pengecekan' : 'Berhasil'}
       </Text>
     </View>
   );
