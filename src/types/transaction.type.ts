@@ -1,3 +1,5 @@
+import {SortOptions} from '@Types/modalsort.type';
+
 export type Transaction = {
   id: string;
   amount: number;
@@ -24,4 +26,6 @@ export interface TransactionState {
     error: string | null;
     data?: Transaction[] | null;
   };
+  transactionFiltered: Transaction[];
+  currentSortOption: SortOptions;
 }

@@ -1,4 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
+import {Transaction} from '@Types/transaction.type';
 
 export const fetchTransactions = createAsyncThunk(
   'transaction/fetchTransactions',
@@ -11,7 +12,7 @@ export const fetchTransactions = createAsyncThunk(
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json(); // Await the JSON parsing
+    const data: Transaction[] = await response.json();
     const mappedTransactions = Object.values(data).map(
       transaction => transaction,
     );

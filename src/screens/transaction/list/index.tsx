@@ -4,6 +4,10 @@ import TransactionItem from '@Components/TransactionItem';
 import {ColorToken} from '@Constants/Color.constants';
 import {useAppDispatch, useTypedSelector} from '@Hooks/Selector.hooks';
 import {fetchTransactions} from '@Store/action/Transaction.action';
+import {
+  filterTransactions,
+  sortTransactions,
+} from '@Store/reducer/Transaction.reducer';
 import {SortOptions} from '@Types/modalsort.type';
 import * as React from 'react';
 import {
@@ -17,13 +21,13 @@ import {
 const ListTransaction = () => {
   const dispatch = useAppDispatch();
   const transactionList = useTypedSelector(
-    state => state.transaction.transactionList.data,
+    state => state.transaction.transactionFiltered,
   );
   const transactionListLoading = useTypedSelector(
     state => state.transaction.transactionList.loading,
   );
   const [sortVisible, setSortVisible] = React.useState(false);
-  const [search, setSearch] = React.useState('');
+  const [searchText, setSearchText] = React.useState('');
   const [selectedSort, setSelectedSort] = React.useState(SortOptions.DEFAULT);
 
   React.useEffect(() => {
@@ -33,6 +37,12 @@ const ListTransaction = () => {
   const handleSort = (option: SortOptions) => {
     setSelectedSort(option);
     setSortVisible(false);
+    dispatch(sortTransactions(option)); // Dispatch the sort action
+  };
+
+  const handleSearch = (text: string) => {
+    setSearchText(text);
+    dispatch(filterTransactions(text)); // Dispatch the filter action
   };
 
   return (
@@ -45,8 +55,8 @@ const ListTransaction = () => {
         ListHeaderComponent={
           <SearchHeader
             onPressSort={() => setSortVisible(true)}
-            onChangeText={text => setSearch(text)}
-            value={search}
+            onChangeText={handleSearch}
+            value={searchText}
             selectedFilter={selectedSort}
           />
         }
