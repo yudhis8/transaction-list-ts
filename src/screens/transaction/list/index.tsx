@@ -34,6 +34,15 @@ const ListTransaction = () => {
     dispatch(fetchTransactions());
   }, [dispatch]);
 
+  // Debounce search input
+  React.useEffect(() => {
+    const delayDebounce = setTimeout(() => {
+      dispatch(filterTransactions(searchText)); // Dispatch the filter action after debounce
+    }, 500); // 0.5-second debounce delay
+
+    return () => clearTimeout(delayDebounce); // Clear timeout on cleanup
+  }, [searchText, dispatch]);
+
   const handleSort = (option: SortOptions) => {
     setSelectedSort(option);
     setSortVisible(false);
@@ -42,7 +51,6 @@ const ListTransaction = () => {
 
   const handleSearch = (text: string) => {
     setSearchText(text);
-    dispatch(filterTransactions(text)); // Dispatch the filter action
   };
 
   return (
