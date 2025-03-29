@@ -1,16 +1,25 @@
 import StatusBadge from '@Components/StatusBadge';
 import {ColorToken} from '@Constants/Color.constants';
-import useCurrencyFormatter from '@Hooks/UseCurrencyFormater.hooks';
-import useDateFormatter from '@Hooks/UseDateFormater.hooks';
+import RouteName from '@Constants/Route.constants';
+import useCurrencyFormatter from '@Hooks/CurrencyFormater.hooks';
+import useDateFormatter from '@Hooks/DateFormater.hooks';
+import {useNavigationWithParams} from '@Hooks/Navigation.hooks';
 import {Transaction} from '@Types/transaction.type';
 import React, {memo} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 const TransactionItem = ({transaction}: {transaction: Transaction}) => {
+  const navigation = useNavigationWithParams();
   const {formatDate} = useDateFormatter();
   const {formatCurrency} = useCurrencyFormatter();
   return (
-    <View
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate(RouteName.TransactionNavigation, {
+          screen: RouteName.DetailTransaction,
+          params: transaction,
+        })
+      }
       style={[
         styles.container,
         transaction?.status === 'PENDING'
@@ -31,7 +40,7 @@ const TransactionItem = ({transaction}: {transaction: Transaction}) => {
         </Text>
       </View>
       <StatusBadge status={transaction.status} />
-    </View>
+    </TouchableOpacity>
   );
 };
 

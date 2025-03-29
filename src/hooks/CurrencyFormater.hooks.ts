@@ -10,7 +10,11 @@ const useCurrencyFormatter = () => {
     }).format(amount);
 
     // Remove the space between 'Rp' and the number
-    return formatted.replace(/\s+/g, '');
+    if (amount === 0) {
+      return 'GRATIS';
+    } else {
+      return formatted.replace(/\s+/g, '');
+    }
   }, []);
 
   return {formatCurrency};

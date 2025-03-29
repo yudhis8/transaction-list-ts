@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: ColorToken.Primary,
   },
-  badgeText: {fontSize: 12, fontWeight: 'bold'},
+  badgeText: {fontSize: 12, fontWeight: 'bold', textAlign: 'center'},
   textSuccess: {color: ColorToken.BaseWhite},
   textPending: {color: ColorToken.TextPrimary},
 });
