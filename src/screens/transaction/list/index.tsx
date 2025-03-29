@@ -13,6 +13,8 @@ import * as React from 'react';
 import {
   ActivityIndicator,
   FlatList,
+  KeyboardAvoidingView,
+  Platform,
   StyleSheet,
   Text,
   View,
@@ -54,7 +56,9 @@ const ListTransaction = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'height' : undefined}
+      style={styles.container}>
       <SortModal visible={sortVisible} onSelect={handleSort} />
       <FlatList
         data={transactionList}
@@ -80,7 +84,7 @@ const ListTransaction = () => {
         }
         renderItem={({item}) => <TransactionItem transaction={item} />}
       />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
