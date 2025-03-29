@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {fetchTransactions} from '@Store/action/Transaction.action';
 import {Transaction, TransactionState} from '@Types/transaction.type';
-import {fetchTransactions} from 'src/store/action/Transaction.action';
 
 const initialState: TransactionState = {
   transactionList: {

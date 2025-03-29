@@ -1,24 +1,21 @@
+import {ColorToken} from '@Constants/Color.constants';
+import MaterialDesignIcons from '@react-native-vector-icons/material-design-icons';
+import {SortModalProps, SortOptions} from '@Types/modalsort.type';
 import React, {memo, useState} from 'react';
-import {Modal, View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
-const SortModal = ({visible, onClose, onSelect}) => {
-  const [selectedOption, setSelectedOption] = useState('URUTKAN');
+const SortModal: React.FC<SortModalProps> = ({visible, onSelect}) => {
+  const [selectedOption, setSelectedOption] = useState(SortOptions.DEFAULT);
 
-  const options = [
-    'URUTKAN',
-    'Nama A-Z',
-    'Nama Z-A',
-    'Tanggal Terbaru',
-    'Tanggal Terlama',
-  ];
+  const options = Object.values(SortOptions); // Use enum values as options
 
-  const handleSelect = option => {
+  const handleSelect = (option: SortOptions) => {
     setSelectedOption(option);
     onSelect(option);
   };
 
   return (
-    <Modal transparent={true} visible={visible} animationType="fade">
+    <Modal transparent={true} visible={visible} animationType='fade'>
       <View style={styles.overlay}>
         <View style={styles.modalContainer}>
           {options.map(option => (
@@ -26,21 +23,22 @@ const SortModal = ({visible, onClose, onSelect}) => {
               key={option}
               style={styles.optionContainer}
               onPress={() => handleSelect(option)}>
-              <MaterialIcons
+              <MaterialDesignIcons
                 name={
                   selectedOption === option
-                    ? 'radio-button-checked'
-                    : 'radio-button-unchecked'
+                    ? 'radiobox-marked'
+                    : 'radiobox-blank'
                 }
                 size={24}
-                color={selectedOption === option ? 'orange' : 'gray'}
+                color={
+                  selectedOption === option
+                    ? ColorToken.Primary
+                    : ColorToken.TextSecondary
+                }
               />
               <Text style={styles.optionText}>{option}</Text>
             </TouchableOpacity>
           ))}
-          <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-            <Text style={styles.closeText}>Close</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </Modal>
@@ -73,17 +71,6 @@ const styles = StyleSheet.create({
   optionText: {
     fontSize: 16,
     marginLeft: 10,
-  },
-  closeButton: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  closeText: {
-    color: 'orange',
-    fontWeight: 'bold',
   },
 });
 

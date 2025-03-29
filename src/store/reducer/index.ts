@@ -1,5 +1,5 @@
 import {combineReducers} from '@reduxjs/toolkit';
-import transactionSlice from 'src/store/reducer/Transaction.reducer';
+import transactionSlice from '@Store/reducer/Transaction.reducer';
 
 const rootReducer = combineReducers({
   transactionSlice,

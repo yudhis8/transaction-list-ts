@@ -2227,6 +2227,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-vector-icons/material-design-icons@npm:^7.4.47":
+  version: 7.4.47
+  resolution: "@react-native-vector-icons/material-design-icons@npm:7.4.47"
+  dependencies:
+    "@react-native-vector-icons/common": ^11.0.0
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 9296497f42b1189614038f7f5b84b74bcdd822237689f2c498bc8d7715730461d2a1a3cbbd2af8b2e2400b042591994c832e2eb1e56de8dea521ab2287ce123e
+  languageName: node
+  linkType: hard
+
 "@react-native/assets-registry@npm:0.78.1":
   version: 0.78.1
   resolution: "@react-native/assets-registry@npm:0.78.1"
@@ -5047,6 +5059,7 @@ __metadata:
     "@react-native-community/cli-platform-android": 15.0.1
     "@react-native-community/cli-platform-ios": 15.0.1
     "@react-native-vector-icons/common": ^11.0.0
+    "@react-native-vector-icons/material-design-icons": ^7.4.47
     "@react-native/babel-preset": 0.78.1
     "@react-native/eslint-config": 0.78.1
     "@react-native/metro-config": 0.78.1

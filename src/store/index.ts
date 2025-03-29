@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Action, configureStore, Reducer} from '@reduxjs/toolkit';
+import rootReducer, {RootState} from '@Store/reducer';
 import {persistReducer, persistStore} from 'redux-persist';
 import {PersistConfig} from 'redux-persist/es/types';
 import {thunk} from 'redux-thunk';
-import rootReducer, {RootState} from 'src/store/reducer';
 
 const persistConfig: PersistConfig<RootState> = {
   key: 'root',

@@ -1,18 +1,31 @@
+import SearchHeader from '@Components/SearchHeader';
+import SortModal from '@Components/SortModal';
 import TransactionItem from '@Components/TransactionItem';
+import {SortOptions} from '@Types/modalsort.type';
 import * as React from 'react';
-import {FlatList, StyleSheet, TextInput, View} from 'react-native';
-import {useNavigationWithParams} from 'src/hooks/Navigation.hooks';
+import {FlatList, StyleSheet, View} from 'react-native';
 
 const ListTransaction = () => {
-  const navigation = useNavigationWithParams();
+  const [sortVisible, setSortVisible] = React.useState(false);
+  const [search, setSearch] = React.useState('');
+  const [selectedSort, setSelectedSort] = React.useState(SortOptions.DEFAULT);
+  const handleSort = (option: SortOptions) => {
+    console.log('Selected:', option);
+    setSelectedSort(option);
+    setSortVisible(false);
+  };
   return (
     <View style={styles.container}>
+      <SortModal visible={sortVisible} onSelect={handleSort} />
       <FlatList
         data={[1, 2, 3]}
+        style={styles.flatlist}
         ListHeaderComponent={
-          <TextInput
-            style={styles.searchBox}
-            placeholder='Cari nama, bank, atau nominal'
+          <SearchHeader
+            onPressSort={() => setSortVisible(true)}
+            onChangeText={text => setSearch(text)}
+            value={search}
+            selectedFilter={selectedSort}
           />
         }
         // keyExtractor={item => item.id}
@@ -25,15 +38,6 @@ const ListTransaction = () => {
 export default ListTransaction;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, padding: 16},
-  searchBox: {
-    backgroundColor: '#fff',
-    padding: 10,
-    borderRadius: 8,
-    marginBottom: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: {width: 0, height: 1},
-    shadowRadius: 2,
-  },
+  container: {flex: 1},
+  flatlist: {padding: 16},
 });
