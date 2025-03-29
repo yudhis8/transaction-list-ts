@@ -59,26 +59,42 @@ const transactionSlice = createSlice({
 
       // Ensure transactionFiltered is not empty before sorting
       if (state.transactionFiltered.length > 0) {
-        state.transactionFiltered.sort((a, b) => {
-          switch (sortOption) {
-            case SortOptions.NAME_ASC:
-              return a.beneficiary_name.localeCompare(b.beneficiary_name);
-            case SortOptions.NAME_DESC:
-              return b.beneficiary_name.localeCompare(a.beneficiary_name);
-            case SortOptions.DATE_NEWEST:
-              return (
-                new Date(b.created_at).getTime() -
-                new Date(a.created_at).getTime()
-              );
-            case SortOptions.DATE_OLDEST:
-              return (
-                new Date(a.created_at).getTime() -
-                new Date(b.created_at).getTime()
-              );
-            default:
-              return 0; // No sorting for default option
+        if (sortOption === SortOptions.DEFAULT) {
+          // Check if a filter is applied
+          if (
+            state.transactionList.data &&
+            state.transactionFiltered.length !==
+              state.transactionList.data.length
+          ) {
+            // If a filter is applied, keep the filtered transactions
+            state.transactionFiltered = [...state.transactionFiltered];
+          } else {
+            // Reset to the original order from transactionList.data
+            state.transactionFiltered = [...(state.transactionList.data || [])];
           }
-        });
+        } else {
+          // Apply sorting based on the selected sort option
+          state.transactionFiltered.sort((a, b) => {
+            switch (sortOption) {
+              case SortOptions.NAME_ASC:
+                return a.beneficiary_name.localeCompare(b.beneficiary_name);
+              case SortOptions.NAME_DESC:
+                return b.beneficiary_name.localeCompare(a.beneficiary_name);
+              case SortOptions.DATE_NEWEST:
+                return (
+                  new Date(b.created_at).getTime() -
+                  new Date(a.created_at).getTime()
+                );
+              case SortOptions.DATE_OLDEST:
+                return (
+                  new Date(a.created_at).getTime() -
+                  new Date(b.created_at).getTime()
+                );
+              default:
+                return 0; // No sorting for default option
+            }
+          });
+        }
       }
     },
   },
